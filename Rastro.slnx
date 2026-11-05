@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Rastro.App/Rastro.App.csproj" />
+    <Project Path="src/Rastro.Core/Rastro.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Rastro.Core.Tests/Rastro.Core.Tests.csproj" />
+  </Folder>
+</Solution>

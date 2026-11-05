@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:controls="clr-namespace:Rastro.App.Controls" xmlns:vm="clr-namespace:Rastro.Core.ViewModels;assembly=Rastro.Core" xmlns:models="clr-namespace:Rastro.Core.Models;assembly=Rastro.Core" x:Class="Rastro.App.Views.HomePage" x:Name="PageRoot" x:DataType="vm:TrackingViewModel" NavigationPage.HasNavigationBar="False" Title="Visão geral">
+    <controls:WorkspaceView>
+        <ScrollView x:Name="PageScroll">
+            <VerticalStackLayout x:Name="PageContent" Padding="36,30,36,24" Spacing="24" MaximumWidthRequest="1260" HorizontalOptions="Fill">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <VerticalStackLayout Spacing="5"><Label Text="Tudo sob controle." Style="{StaticResource Heading}" /><Label Text="Cada encomenda tem uma história. Acompanhe a sua." Style="{StaticResource MutedLabel}" /></VerticalStackLayout>
+                    <Border x:Name="GreetingBadge" Grid.Column="1" BackgroundColor="White" StrokeThickness="0" Padding="12,8" VerticalOptions="Center"><HorizontalStackLayout Spacing="7"><Image Source="sun.png" WidthRequest="17" HeightRequest="17" /><Label Text="Que bom ter você por aqui" FontSize="10" VerticalOptions="Center" /></HorizontalStackLayout></Border>
+                </Grid>
+
+                <Border BackgroundColor="#FEF1E9" Stroke="#F7E4D8" StrokeShape="RoundRectangle 22" x:Name="Hero" Padding="30,26">
+                    <Grid x:Name="HeroGrid" ColumnDefinitions="1.55*,*" ColumnSpacing="12">
+                        <VerticalStackLayout Spacing="14">
+                            <Label Text="CADA ETAPA, MAIS PERTO." Style="{StaticResource Eyebrow}" TextColor="#B85932" FontSize="9" />
+                            <Label Text="Sua encomenda.&#10;Um caminho mais simples." x:Name="HeroHeading" FontSize="31" FontAttributes="Bold" CharacterSpacing="-1.2" LineHeight="1.12" />
+                            <Label Text="Do primeiro passo à sua porta. Rastreie com tranquilidade." FontSize="11" TextColor="#856C60" />
+                            <Border Padding="12,2" BackgroundColor="White" Stroke="#EDDACE" StrokeShape="RoundRectangle 12" Margin="0,4,0,0">
+                                <Grid ColumnDefinitions="22,*" ColumnSpacing="8"><Image Source="search.png" WidthRequest="18" HeightRequest="18" /><Entry Grid.Column="1" Text="{Binding Code}" Placeholder="Digite o código de rastreamento" ReturnType="Search" ReturnCommand="{Binding TrackCommand}" MaxLength="30" IsEnabled="{Binding IsReady}" AutomationId="TrackingCodeEntry" SemanticProperties.Description="Código de rastreamento. Exemplo: BR123456789SP" /></Grid>
+                            </Border>
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12"><Button Text="{Binding TrackButtonText}" Command="{Binding TrackCommand}" IsEnabled="{Binding IsReady}" AutomationId="TrackButton" /><ActivityIndicator Grid.Column="1" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Start" WidthRequest="22" HeightRequest="22" /></Grid>
+                            <HorizontalStackLayout Spacing="3"><Label Text="Experimente:" FontSize="10" TextColor="#856C60" VerticalOptions="Center" /><Button Text="BR123456789SP  ↗" FontSize="10" TextColor="#A84F2B" Style="{StaticResource TextButton}" Command="{Binding TrackCommand}" CommandParameter="BR123456789SP" AutomationId="DemoCodeButton" /></HorizontalStackLayout>
+                        </VerticalStackLayout>
+                        <Image x:Name="HeroIllustration" Grid.Column="1" Source="parcel_journey.png" Aspect="AspectFit" MaximumHeightRequest="290" SemanticProperties.Description="Ilustração de um pacote percorrendo uma rota até seu destino" />
+                    </Grid>
+                </Border>
+
+                <Border IsVisible="{Binding HasError}" BackgroundColor="#FFF0EC" Stroke="#F3D2C5" Padding="16,12" AutomationId="TrackingError"><Label Text="{Binding ErrorMessage}" TextColor="#A14125" FontSize="12" SemanticProperties.Description="{Binding ErrorMessage}" /></Border>
+
+                <VerticalStackLayout IsVisible="{Binding HasRecentSearches}" Spacing="8"><Label Text="CONSULTAS RECENTES" Style="{StaticResource Eyebrow}" FontSize="9" /><FlexLayout BindableLayout.ItemsSource="{Binding RecentSearches}" Wrap="Wrap"><BindableLayout.ItemTemplate><DataTemplate x:DataType="x:String"><Button Text="{Binding .}" Command="{Binding Source={x:Reference PageRoot}, Path=BindingContext.TrackCommand}" CommandParameter="{Binding .}" Style="{StaticResource SecondaryButton}" FontSize="10" Margin="0,0,8,4" /></DataTemplate></BindableLayout.ItemTemplate></FlexLayout></VerticalStackLayout>
+
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12">
+                    <Border x:Name="StatTotal" Padding="18,16"><Grid ColumnDefinitions="*,Auto"><VerticalStackLayout Spacing="5"><Label Text="Salvas" Style="{StaticResource MutedLabel}" FontSize="10" /><Label Text="{Binding SavedCount, StringFormat='{0:00}'}" FontSize="28" FontAttributes="Bold" /></VerticalStackLayout><Border Grid.Column="1" BackgroundColor="#F2F4F7" StrokeThickness="0" WidthRequest="38" HeightRequest="38" VerticalOptions="Center" StrokeShape="RoundRectangle 12"><Image Source="nav_box.png" WidthRequest="20" HeightRequest="20" /></Border></Grid></Border>
+                    <Border x:Name="StatActive" Grid.Column="1" Padding="18,16"><Grid ColumnDefinitions="*,Auto"><VerticalStackLayout Spacing="5"><Label Text="A caminho" Style="{StaticResource MutedLabel}" FontSize="10" /><Label Text="{Binding ActiveCount, StringFormat='{0:00}'}" FontSize="28" FontAttributes="Bold" /></VerticalStackLayout><Border Grid.Column="1" BackgroundColor="{StaticResource Peach}" StrokeThickness="0" WidthRequest="38" HeightRequest="38" VerticalOptions="Center" StrokeShape="RoundRectangle 12"><Image Source="truck.png" WidthRequest="20" HeightRequest="20" /></Border></Grid></Border>
+                    <Border x:Name="StatDelivered" Grid.Column="2" Padding="18,16"><Grid ColumnDefinitions="*,Auto"><VerticalStackLayout Spacing="5"><Label Text="Entregues" Style="{StaticResource MutedLabel}" FontSize="10" /><Label Text="{Binding DeliveredCount, StringFormat='{0:00}'}" FontSize="28" FontAttributes="Bold" /></VerticalStackLayout><Border Grid.Column="1" BackgroundColor="#EAF4ED" StrokeThickness="0" WidthRequest="38" HeightRequest="38" VerticalOptions="Center" StrokeShape="RoundRectangle 12"><Image Source="check.png" WidthRequest="20" HeightRequest="20" /></Border></Grid></Border>
+                </Grid>
+
+                <VerticalStackLayout Spacing="16">
+                    <Grid ColumnDefinitions="*,Auto" x:Name="DeliveriesHeader" RowDefinitions="Auto,Auto" RowSpacing="12">
+                        <VerticalStackLayout Spacing="3"><Label Text="Suas entregas" Style="{StaticResource SectionHeading}" /><Label Text="Um olhar para tudo que está chegando." Style="{StaticResource MutedLabel}" FontSize="10" /></VerticalStackLayout>
+                        <Border x:Name="FiltersBorder" Grid.Column="1" BackgroundColor="#EDF0F3" StrokeThickness="0" Padding="3" StrokeShape="RoundRectangle 12" VerticalOptions="Center">
+                            <HorizontalStackLayout Spacing="2">
+                                <Button Text="Todas" Command="{Binding FilterCommand}" CommandParameter="Todas" Style="{StaticResource FilterButton}" AutomationId="FilterAll"><Button.Triggers><DataTrigger TargetType="Button" Binding="{Binding AllSelected}" Value="True"><Setter Property="BackgroundColor" Value="White" /><Setter Property="TextColor" Value="{StaticResource Ink}" /></DataTrigger></Button.Triggers></Button>
+                                <Button Text="Em andamento" Command="{Binding FilterCommand}" CommandParameter="Em andamento" Style="{StaticResource FilterButton}" AutomationId="FilterActive"><Button.Triggers><DataTrigger TargetType="Button" Binding="{Binding ActiveSelected}" Value="True"><Setter Property="BackgroundColor" Value="White" /><Setter Property="TextColor" Value="{StaticResource Ink}" /></DataTrigger></Button.Triggers></Button>
+                                <Button Text="Entregues" Command="{Binding FilterCommand}" CommandParameter="Entregues" Style="{StaticResource FilterButton}" AutomationId="FilterDelivered"><Button.Triggers><DataTrigger TargetType="Button" Binding="{Binding DeliveredSelected}" Value="True"><Setter Property="BackgroundColor" Value="White" /><Setter Property="TextColor" Value="{StaticResource Ink}" /></DataTrigger></Button.Triggers></Button>
+                            </HorizontalStackLayout>
+                        </Border>
+                    </Grid>
+                    <FlexLayout x:Name="PackageCards" BindableLayout.ItemsSource="{Binding Packages}" Direction="Row" Wrap="Wrap" AlignItems="Stretch" JustifyContent="Start">
+                        <BindableLayout.ItemTemplate><DataTemplate x:DataType="models:Package">
+                            <Border Margin="0,0,12,12" Padding="20" Loaded="OnCardLoaded" MinimumWidthRequest="220">
+                                <VerticalStackLayout Spacing="15">
+                                    <Grid ColumnDefinitions="40,*" ColumnSpacing="10">
+                                        <Border BackgroundColor="#F8F2EB" StrokeThickness="0" WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 12"><Image Source="parcel.png" WidthRequest="26" HeightRequest="26" /></Border>
+                                        <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center"><Label Text="{Binding Sender}" FontSize="12" FontAttributes="Bold" /><Label Text="{Binding Category}" Style="{StaticResource MutedLabel}" FontSize="9" /></VerticalStackLayout>
+                                    </Grid>
+                                    <VerticalStackLayout Spacing="7"><Label Text="{Binding Name}" FontSize="12" FontAttributes="Bold" /><Label Text="{Binding Id}" FontSize="10" TextColor="{StaticResource Muted}" CharacterSpacing="0.5" /></VerticalStackLayout>
+                                    <Border BackgroundColor="{Binding StatusBackground}" StrokeThickness="0" Padding="9,5" StrokeShape="RoundRectangle 6" HorizontalOptions="Start"><Label Text="{Binding StatusLabel}" TextColor="{Binding StatusColor}" FontSize="9" FontAttributes="Bold" /></Border>
+                                    <ProgressBar Progress="{Binding Progress}" ProgressColor="{Binding StatusColor}" />
+                                    <Grid ColumnDefinitions="*,Auto"><VerticalStackLayout Spacing="4"><Label Text="{Binding DeliveryLabel}" Style="{StaticResource MutedLabel}" FontSize="9" /><Label Text="{Binding ShortDeliveryDate}" FontSize="13" FontAttributes="Bold" /></VerticalStackLayout><Button Grid.Column="1" Text="Ver detalhes  ↗" Command="{Binding Source={x:Reference PageRoot}, Path=BindingContext.TrackCommand}" CommandParameter="{Binding Id}" Style="{StaticResource TextButton}" TextColor="{StaticResource Accent}" FontSize="10" Padding="0" VerticalOptions="End" AutomationId="OpenPackageButton" /></Grid>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate></BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                    <Border IsVisible="{Binding HasNoPackages}" Padding="24" BackgroundColor="White"><VerticalStackLayout Spacing="10"><Image Source="nav_box.png" WidthRequest="36" HeightRequest="36" /><Label Text="Nenhuma encomenda por aqui. Ainda." FontAttributes="Bold" HorizontalTextAlignment="Center" /><Label Text="Consulte um código e salve a encomenda ou selecione outro filtro." Style="{StaticResource MutedLabel}" HorizontalTextAlignment="Center" /></VerticalStackLayout></Border>
+                </VerticalStackLayout>
+
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10" Margin="0,0,0,4"><Label Text="Feito para aproximar você do que importa." FontSize="9" TextColor="#8C969F" /><Label Grid.Column="1" Text="rastro.  /  IFSP · TP03" FontSize="9" TextColor="#8C969F" /></Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+    </controls:WorkspaceView>
+</ContentPage>

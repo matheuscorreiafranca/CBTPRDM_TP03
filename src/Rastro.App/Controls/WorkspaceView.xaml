@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:vm="clr-namespace:Rastro.Core.ViewModels;assembly=Rastro.Core" x:Class="Rastro.App.Controls.WorkspaceView" x:Name="Root" x:DataType="vm:TrackingViewModel">
+    <ContentView.Content>
+    <Grid x:Name="WorkspaceGrid" ColumnDefinitions="216,*" BackgroundColor="{StaticResource Canvas}">
+        <Border x:Name="Sidebar" StrokeShape="RoundRectangle 0" StrokeThickness="0" Padding="22,32,22,22">
+            <Grid RowDefinitions="Auto,*,Auto" RowSpacing="38">
+                <HorizontalStackLayout Spacing="10" Margin="6,0,0,0"><Image Source="brand_mark.png" WidthRequest="34" HeightRequest="34" /><Label Text="rastro." FontSize="30" FontAttributes="Bold" CharacterSpacing="-1.6" VerticalOptions="Center" /></HorizontalStackLayout>
+                <VerticalStackLayout Grid.Row="1" Spacing="7">
+                    <Label Text="ACOMPANHAMENTO" Style="{StaticResource Eyebrow}" Margin="12,0,0,12" FontSize="9" />
+                    <Button Text="Visão geral" ImageSource="nav_grid.png" Command="{Binding HomeCommand}" Style="{StaticResource NavButton}" BackgroundColor="{StaticResource Peach}" TextColor="{StaticResource Accent}" AutomationId="NavHome" />
+                    <Button Text="Entregas salvas" ImageSource="nav_box.png" Command="{Binding SavedCommand}" Style="{StaticResource NavButton}" AutomationId="NavSaved" />
+                    <BoxView HeightRequest="1" Color="{StaticResource Line}" Margin="12,17" />
+                    <Button Text="Como funciona" ImageSource="nav_help.png" Command="{Binding HelpCommand}" Style="{StaticResource NavButton}" AutomationId="NavHelp" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Row="2" Spacing="22">
+                    <Border BackgroundColor="#F8FAF9" Stroke="#E5EEE9" Padding="16" StrokeShape="RoundRectangle 14">
+                        <VerticalStackLayout Spacing="8"><Image Source="leaf.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Start" /><Label Text="Menos ansiedade.&#10;Mais transparência." FontSize="12" FontAttributes="Bold" /><Label Text="Acompanhe cada etapa,&#10;do envio ao seu abraço." FontSize="10" TextColor="{StaticResource Muted}" LineHeight="1.3" /></VerticalStackLayout>
+                    </Border>
+                    <Grid ColumnDefinitions="34,*" ColumnSpacing="10" Margin="4,0">
+                        <Border WidthRequest="34" HeightRequest="34" StrokeThickness="0" BackgroundColor="#F1E9DF" StrokeShape="RoundRectangle 17"><Label Text="MF" FontSize="10" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" /></Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2"><Label Text="Matheus França" FontSize="11" FontAttributes="Bold" /><Label Text="Seu espaço de entregas" FontSize="9" TextColor="{StaticResource Muted}" /></VerticalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+        <Grid Grid.Column="1" RowDefinitions="72,*" x:Name="MainArea">
+            <Border StrokeShape="RoundRectangle 0" StrokeThickness="0" BackgroundColor="White" Padding="32,0">
+                <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                    <HorizontalStackLayout Spacing="9" VerticalOptions="Center"><Image Source="brand_mark.png" WidthRequest="22" HeightRequest="22" x:Name="MobileLogo" IsVisible="False" /><Label Text="Seu espaço" TextColor="{StaticResource Muted}" FontSize="11" VerticalOptions="Center" /><Label Text="/" TextColor="#C5CBD1" VerticalOptions="Center" /><Label Text="Rastreamento" FontSize="11" FontAttributes="Bold" VerticalOptions="Center" /></HorizontalStackLayout>
+                    <HorizontalStackLayout Grid.Column="1" Spacing="14" VerticalOptions="Center">
+                        <Border Padding="10,5" BackgroundColor="#F1F6F2" StrokeThickness="0" StrokeShape="RoundRectangle 7" VerticalOptions="Center"><HorizontalStackLayout Spacing="6"><BoxView Color="#4E8E69" WidthRequest="5" HeightRequest="5" CornerRadius="2" VerticalOptions="Center" /><Label Text="Demonstração" FontSize="9" TextColor="#497458" /></HorizontalStackLayout></Border>
+                        <Button x:Name="MobileHelp" Text="?" Command="{Binding HelpCommand}" Style="{StaticResource SecondaryButton}" WidthRequest="44" Padding="0" IsVisible="False" SemanticProperties.Description="Abrir ajuda e códigos de demonstração" />
+                    </HorizontalStackLayout>
+                </Grid>
+            </Border>
+            <ContentView Grid.Row="1" x:Name="BodyHost" />
+        </Grid>
+    </Grid>
+    </ContentView.Content>
+</ContentView>
