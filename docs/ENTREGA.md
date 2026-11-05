@@ -14,7 +14,7 @@ O GIF incluído registra a aplicação nativa em execução. Para uma apresenta�
 
 ## Texto sugerido para envio pelo aluno
 
-**Destinatário:** tulermoraes@yahoo.com  
+**Destinatário:** tulermoraes@yahoo.com
 **Assunto:** CBTPRDM - Trabalho Prático 03
 
 Professor Wellington,

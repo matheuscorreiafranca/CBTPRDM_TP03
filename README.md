@@ -2,7 +2,7 @@
 
 **Cada etapa, mais perto.** Aplicativo de rastreamento logístico em **.NET MAUI 10, XAML e MVVM**, desenvolvido para o Trabalho Prático 03 de CBTPRDM, IFSP Campus Cubatão.
 
-**Dupla:** Matheus Correia França e Davi Leite Coelho — CB303142X.  
+**Dupla:** Matheus Correia França e Davi Leite Coelho — CB303142X.
 **Professor:** Wellington Tuler Moraes.
 
 ![Rastro em execução — busca e rastreamento](docs/demonstracao.gif)
